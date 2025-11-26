@@ -1,52 +1,97 @@
-# MERN Stack Capstone Project
+# EduConnect - MERN Project Documentation
 
-This assignment focuses on designing, developing, and deploying a comprehensive full-stack MERN application that showcases all the skills you've learned throughout the course.
+A complete guide, code snippets, and setup instructions for the **EduConnect** project, an online learning platform developed with the MERN stack (MongoDB, Express, React, Node.js). This project supports SDG 4: Quality Education, enabling teachers to upload learning resources (PDFs, images, videos) and students to browse and download them.
 
-## Assignment Overview
+---
 
-You will:
-1. Plan and design a full-stack MERN application
-2. Develop a robust backend with MongoDB, Express.js, and Node.js
-3. Create an interactive frontend with React.js
-4. Implement testing across the entire application
-5. Deploy the application to production
+## Project Overview
 
-## Getting Started
+EduConnect is a full-stack web application designed to connect students and educators. Key features include:
 
-1. Accept the GitHub Classroom assignment
-2. Clone the repository to your local machine
-3. Follow the instructions in the `Week8-Assignment.md` file
-4. Plan, develop, and deploy your capstone project
+- User authentication with student/teacher roles
+- File upload and management (PDFs, images, videos) via Cloudinary
+- Resource browsing, preview, and download functionality
+- Teacher dashboard for uploading and managing resources
+- Student dashboard for accessing and downloading resources
+- Administrator dashborard for overseeing all activities within the system
+- Role-based access control and protected routes
 
-## Files Included
+---
 
-- `Week8-Assignment.md`: Detailed assignment instructions
+## Folder Structure
 
-## Requirements
+```
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
+educonnect/
+├── backend/
+│ ├── config/
+│ │ └── db.js
+│ ├── controllers/
+│ │ ├── authController.js
+│ │ └── resourceController.js
+│ ├── middleware/
+│ │ ├── authMiddleware.js
+│ │ └── upload.js
+│ ├── models/
+│ │ ├── User.js
+│ │ └── Resource.js
+│ ├── routes/
+│ │ ├── authRoutes.js
+│ │ └── resourceRoutes.js
+│ ├── server.js
+│ └── .env
+├── frontend/
+│ ├── public/
+│ └── src/
+│ ├── components/
+│ ├── context/
+│ ├── pages/
+│ ├── App.jsx
+│ ├── main.jsx
+│ └── index.css
+└── README.md
+
+```
+
+
+## Prerequisites
+
+- Node.js (v16+ recommended)
 - npm or yarn
+- MongoDB Atlas account or local MongoDB
+- Cloudinary account for file hosting (optional but recommended)
 - Git and GitHub account
-- Accounts on deployment platforms (Render/Vercel/Netlify/etc.)
+- (Optional) Vercel or Netlify account for deployment
 
-## Project Ideas
+---
 
-The `Week8-Assignment.md` file includes several project ideas, but you're encouraged to develop your own idea that demonstrates your skills and interests.
+## Backend - Setup & Key Files
 
-## Submission
+### Install dependencies
 
-Your project will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+```
+cd backend
+npm init -y
+npm install express mongoose dotenv bcryptjs jsonwebtoken cors multer cloudinary
 
-1. Commit and push your code regularly
-2. Include comprehensive documentation
-3. Deploy your application and add the live URL to your README.md
-4. Create a video demonstration and include the link in your README.md
+```
+## Deployment
 
-## Resources
+## Frontend (Vercel)
 
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Express.js Documentation](https://expressjs.com/)
-- [React Documentation](https://react.dev/)
-- [Node.js Documentation](https://nodejs.org/en/docs/)
-- [GitHub Classroom Guide](https://docs.github.com/en/education/manage-coursework-with-github-classroom) 
+Build command: npm run build
+
+Publish directory: dist
+
+
+https://edu-connect-snowy.vercel.app/
+
+
+## Backend (Render/Railway/Heroku)
+
+Set environment variables from .env
+
+Ensure CORS allows frontend origin
+
+
+https://educonnect-mern-stack-final-project.onrender.com
