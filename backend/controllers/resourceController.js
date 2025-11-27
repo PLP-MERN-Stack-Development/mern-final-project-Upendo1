@@ -20,7 +20,10 @@ exports.getResources = async (req, res) => {
 // -----------------------------
 // CREATE RESOURCE (upload)
 // -----------------------------
-exports.createResource = async (req, res) => {
+
+const BASE_URL = "https://educonnect-mern-stack-final-project.onrender.com";
+
+export const createResource = async (req, res) => {
   try {
     if (!req.user?._id) {
       return res.status(401).json({ message: "Authentication required" });
@@ -35,11 +38,14 @@ exports.createResource = async (req, res) => {
       return res.status(400).json({ message: "Category is required" });
     }
 
+    // Build full public URL
+    const fileUrl = `${BASE_URL}/uploads/${file.filename}`;
+
     const resource = await Resource.create({
       title: req.body.title,
       description: req.body.description,
       category: req.body.category,
-      file_url: file.path,
+      file_url: fileUrl,
       file_type: file.mimetype,
       file_size: file.size,
       teacher: req.user._id,
@@ -51,7 +57,6 @@ exports.createResource = async (req, res) => {
     res.status(500).json({ message: "Upload failed", error: error.message });
   }
 };
-
 // -----------------------------
 // GET RECENT RESOURCES
 // -----------------------------
@@ -157,15 +162,36 @@ exports.trackDownload = async (req, res) => {
   }
 };
 
+// exports.viewResourceFile = async (req, res) => {
+//   try {
+//     const resource = await Resource.findById(req.params.id);
+
+//     if (!resource) {
+//       return res.status(404).json({ message: "Resource not found" });
+//     }
+
+//     const filePath = path.resolve(resource.file_url);
+
+//     return res.sendFile(filePath);
+//   } catch (error) {
+//     console.error("View Resource File Error:", error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
 exports.viewResourceFile = async (req, res) => {
   try {
+    console.log("VIEW FILE ID:", req.params.id);
+
     const resource = await Resource.findById(req.params.id);
 
     if (!resource) {
       return res.status(404).json({ message: "Resource not found" });
     }
 
-    const filePath = path.resolve(resource.file_url);
+    // ensure backend directory is used
+    const filePath = path.join(__dirname, "..", resource.file_url);
+
+    // console.log("SERVING FILE:", filePath);
 
     return res.sendFile(filePath);
   } catch (error) {
